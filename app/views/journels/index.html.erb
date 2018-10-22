@@ -1,0 +1,19 @@
+<h1>All Journals</h1>
+<%= form_tag search_journels_path, method: 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", class: "btn btn-outline-primary" %>
+  </p>
+<% end %>
+<% if @journels.any? %>
+  <div class="w-50 p-1">
+    <ul class="list-group list-group-flush">
+      <% @journels.each do |journel| %>
+        <li class="list-group-item"><%= link_to journel.name, journel_path(journel.id) %> </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <p>Nothing is here yet!. Try adding new journels</p>
+<% end %>
+<%= link_to "New Journal", new_journel_path, class: "btn btn-outline-secondary mt-2",remote: true%>

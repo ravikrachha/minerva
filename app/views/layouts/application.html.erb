@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Journal</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="container-fluid <%= params[:controller] %>-<%=params[:action]%>">
+    <% flash.each do |name, msg| %>
+      <div class= "mt-2 alert alert-<%= name %> alert-dismissible fades show" role="alert">
+        <strong><%= msg %></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+    <%= yield %>
+    <div class="modal" id="appModal" tabindex="-1" role="dialog"></div>
+  </body>
+</html>

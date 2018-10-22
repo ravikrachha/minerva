@@ -1,0 +1,43 @@
+<h1>Journal</h1>
+<strong><%= @journel.name%></strong>
+<strong><%= @journel.created_at.strftime("Created on %m/%d/%Y %H:%M:%S %Z") %></strong>
+<hr/>
+<h3>Entries</h3>
+<%= form_tag search_entries_journel_path, method: 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", class: "btn btn-outline-primary" %>
+    </p>
+<% end %>
+
+<h3>Graph</h3>
+<%= form_tag(graph_data_journel_path, method: 'get', remote: true, id: "graph_form") do %>
+    <%= select_tag(:graph_filter, options_for_select([["Week", 'w'], ["Month", "m"], ["Year", "y"], ["All", "a"]])) %>
+    <%= submit_tag "Search", class: "btn btn-outline-primary" %>
+<% end %>
+<div class="w-50 mt-2", id="journel_entries_graph">
+    <%= render partial: "graph" %>
+</div>
+
+<% if @journel_entries_date.any? %>
+    <% @journel_entries_date.each do |date, journel_entries| %>
+        <div class="w-50 p-1">
+            <ul class="list-group list-group-flush">
+                <% journel_entries.each do |je| %>
+                    <li class="list-group-item">
+                        <div>Title: <%= je.title %></div>
+                        <div><%= je.created_at.strftime("Created on %m/%d/%Y %H:%M:%S %Z") %></div>
+                        <div>Updated: <%= je.updated? ? "Yes" : "No" %></div>
+                        <div><%= link_to "Details", journel_journel_entry_path(journel_id: @journel.id, id: je.id) %></div>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+        </hr>
+    <% end %>
+<% else %>
+    <p class="mt-3">Nothing is here yet!. Try adding new entries</p>
+<% end %>
+
+<%= link_to "New Entry", new_journel_journel_entry_path(journel_id: @journel.id), class: "btn btn-outline-secondary mt-2",remote: true %>
+<%= link_to "Back", journels_path, class: "btn btn-outline-secondary mt-2" %>

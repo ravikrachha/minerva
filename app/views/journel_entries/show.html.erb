@@ -1,0 +1,7 @@
+<h1>Journal Entry</h1>
+<strong>Title</strong>
+<p><%= @journel_entry.title %></p>
+<strong>Body</strong>
+<p><%= @journel_entry.body %></p>
+<%= link_to "Edit", edit_journel_journel_entry_path(journel_id: @journel_entry.app_journel.id, id: @journel_entry.id), class: "btn btn-outline-secondary mt-2",remote: true %>
+<%= link_to "Back", journel_path(id: @journel_entry.app_journel.id), class: "btn btn-outline-secondary mt-2" %>
